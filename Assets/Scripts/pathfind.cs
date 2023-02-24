@@ -57,7 +57,7 @@ public class pathfind
             {
                 Debug.DrawLine(endPos, endPos + new Vector3(0, 0.1f, 0));
                 endNode = currentNode;
-                endReached = true; 
+                endReached = true;
             }
             foreach(Vector3 v in adjacentPoints)
             {
