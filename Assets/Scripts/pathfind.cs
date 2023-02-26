@@ -15,7 +15,7 @@ public class node
 public class pathfindData 
 {
     public List<Vector2> walkablePoints = new List<Vector2>();
-    public Stack<Vector2> pathPoints = new Stack<Vector2>();
+    public List<Vector2> pathPoints = new List<Vector2>();
 }
 
 public class pathfind
@@ -120,10 +120,10 @@ public class pathfind
         if (endReached)
         {
             currentNode = endNode;
-            while (currentNode.parentNode.parentNode != null)
+            while (currentNode.parentNode != null)
             {
                 Debug.DrawLine(currentNode.pos, currentNode.parentNode.pos);
-                pD.pathPoints.Push(currentNode.pos);
+                pD.pathPoints.Add(currentNode.pos);
                 currentNode = currentNode.parentNode;
             }
         }
