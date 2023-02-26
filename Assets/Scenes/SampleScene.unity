@@ -3151,11 +3151,11 @@ MonoBehaviour:
   pathCircle: {fileID: 2920166179949195324, guid: 2ec5ac05eac774b4087385eca0ea9562, type: 3}
   findPath: 1
   checkWalk: 1
-  move: 5
-  stepTime: 1
+  move: 0
+  stepTime: 0.25
   target: {fileID: 417470279}
   floor: {fileID: 571998699}
-  movement: 0
+  movement: 10
 --- !u!1 &888097008
 GameObject:
   m_ObjectHideFlags: 0

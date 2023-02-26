@@ -27,8 +27,12 @@ public class unitTest : MonoBehaviour
     void Update()
     {
         target.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (moving)
+        if (!moving)
         {
+            if (Input.GetMouseButtonDown(0) && pd.withinRange)
+            {
+                move = true;
+            }
             if (findPath)
             {
                 pd = pathfind.path(transform.position, target.position, movement);
@@ -42,23 +46,32 @@ public class unitTest : MonoBehaviour
             if (move)
             {
                 move = false;
+                startWalk();
             }
         }
     }
 
     void startWalk()
     {
+        moving = true;
         currentWalkIndex = pd.pathPoints.Count - 1;
+        transform.position = pd.pathPoints[currentWalkIndex];
         Invoke("walkStep", stepTime);
     }
 
     void walkStep()
     {
-        if(currentWalkIndex > 0)
+        currentWalkIndex--;
+        Debug.Log(currentWalkIndex);
+        if (currentWalkIndex >= 0)
         {
-
-            currentWalkIndex--;
+            transform.position = pd.pathPoints[currentWalkIndex];
             Invoke("walkStep", stepTime);
+        }
+        else
+        {
+            moving = false;
+            checkWalk = true;
         }
     }
 

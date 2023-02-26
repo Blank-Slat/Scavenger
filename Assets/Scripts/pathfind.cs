@@ -14,6 +14,7 @@ public class node
 
 public class pathfindData 
 {
+    public bool withinRange = false;
     public List<Vector2> walkablePoints = new List<Vector2>();
     public List<Vector2> pathPoints = new List<Vector2>();
 }
@@ -117,6 +118,7 @@ public class pathfind
             Debug.DrawLine(n.pos, n.pos + new Vector2(0, .1f));
             pD.walkablePoints.Add(n.pos);
         }
+        pD.withinRange = endReached;
         if (endReached)
         {
             currentNode = endNode;
