@@ -22,7 +22,7 @@ public class unitTest : MonoBehaviour
     public Tilemap floor;
     [Range(0, 50)]
     public int movement;
-    private int currentMovement;
+    private float currentMovement;
 
     public pathfindData pd;
     private void Start()
@@ -64,9 +64,18 @@ public class unitTest : MonoBehaviour
     void startWalk()
     {
         moving = true;
-        currentMovement -= pd.pathPoints.Count;
+        currentMovement -= pd.stepsTaken;
         currentWalkIndex = pd.pathPoints.Count - 1;
         transform.position = pd.pathPoints[currentWalkIndex];
+        foreach (GameObject g in pathCircles)
+        {
+            if (Vector3.Distance(transform.position, g.transform.position) <= 0.25f)
+            {
+                pathCircles.Remove(g);
+                Destroy(g);
+                break;
+            }
+        }
         Invoke("walkStep", stepTime);
     }
 
@@ -82,6 +91,15 @@ public class unitTest : MonoBehaviour
         {
             moving = false;
             checkWalk = true;
+        }
+        foreach (GameObject g in pathCircles)
+        {
+            if (Vector3.Distance(transform.position, g.transform.position) <= 0.25f)
+            {
+                pathCircles.Remove(g);
+                Destroy(g);
+                break;
+            }
         }
     }
 

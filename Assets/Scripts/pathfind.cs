@@ -18,13 +18,14 @@ public class pathfindData
     public List<Vector2> walkablePoints = new List<Vector2>();
     public List<Vector2> pathPoints = new List<Vector2>();
     public Vector2 endPoint;
+    public float stepsTaken;
 }
 
 public class pathfind
 {
     public static Vector3[] adjacentPoints;
 
-    public static pathfindData path(Vector3 startPos, Vector3 endPos, int movement)
+    public static pathfindData path(Vector3 startPos, Vector3 endPos, float movement)
     {
         bool endReached = false;
         node endNode = new node();
@@ -130,6 +131,7 @@ public class pathfind
         if (endReached)
         {
             pD.endPoint = endNode.pos;
+            pD.stepsTaken = endNode.g * 0.1f;
             currentNode = endNode;
             while (currentNode.parentNode != null)
             {
