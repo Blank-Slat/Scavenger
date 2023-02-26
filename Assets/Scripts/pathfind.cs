@@ -17,6 +17,7 @@ public class pathfindData
     public bool withinRange = false;
     public List<Vector2> walkablePoints = new List<Vector2>();
     public List<Vector2> pathPoints = new List<Vector2>();
+    public Vector2 endPoint;
 }
 
 public class pathfind
@@ -27,13 +28,17 @@ public class pathfind
     {
         bool endReached = false;
         node endNode = new node();
-
         node currentNode = new node();
         currentNode.pos = startPos;
+
         List<node> openNodes = new List<node>();
         List<node> closedNodes = new List<node>();
+
         openNodes.Add(currentNode);
         int c = 0;
+
+        node startNode = currentNode;
+
         while (openNodes.Count > 0)
         {
             c++;
@@ -111,6 +116,9 @@ public class pathfind
                 }
             }
         }
+
+        closedNodes.Remove(startNode);
+
         pathfindData pD = new pathfindData();
 
         foreach (node n in closedNodes)
@@ -121,6 +129,7 @@ public class pathfind
         pD.withinRange = endReached;
         if (endReached)
         {
+            pD.endPoint = endNode.pos;
             currentNode = endNode;
             while (currentNode.parentNode != null)
             {
@@ -128,6 +137,10 @@ public class pathfind
                 pD.pathPoints.Add(currentNode.pos);
                 currentNode = currentNode.parentNode;
             }
+        }
+        else
+        {
+            pD.endPoint = startPos;
         }
 
         return pD;

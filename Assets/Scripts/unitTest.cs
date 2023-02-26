@@ -22,8 +22,13 @@ public class unitTest : MonoBehaviour
     public Tilemap floor;
     [Range(0, 50)]
     public int movement;
+    private int currentMovement;
 
-    private pathfindData pd;
+    public pathfindData pd;
+    private void Start()
+    {
+        setData();
+    }
     void Update()
     {
         target.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -35,7 +40,7 @@ public class unitTest : MonoBehaviour
             }
             if (findPath)
             {
-                pd = pathfind.path(transform.position, target.position, movement);
+                pd = pathfind.path(transform.position, target.position, currentMovement);
                 setPath();
             }
             if (checkWalk)
@@ -50,10 +55,16 @@ public class unitTest : MonoBehaviour
             }
         }
     }
+    void setData()
+    {
+        Debug.Log("Set data");
+        currentMovement = movement;
+    }
 
     void startWalk()
     {
         moving = true;
+        currentMovement -= pd.pathPoints.Count;
         currentWalkIndex = pd.pathPoints.Count - 1;
         transform.position = pd.pathPoints[currentWalkIndex];
         Invoke("walkStep", stepTime);
@@ -62,7 +73,6 @@ public class unitTest : MonoBehaviour
     void walkStep()
     {
         currentWalkIndex--;
-        Debug.Log(currentWalkIndex);
         if (currentWalkIndex >= 0)
         {
             transform.position = pd.pathPoints[currentWalkIndex];
