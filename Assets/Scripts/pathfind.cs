@@ -70,9 +70,22 @@ public class pathfind
             {
                 Vector2 v2 = currentNode.pos + new Vector2(v.x, v.y);
                 bool inClosed = false;
-
-                bool blocked = !Physics2D.OverlapCircle(v2, 0.25f);
-                if (blocked)
+                bool blocked = false;
+                RaycastHit2D[] collisions = Physics2D.LinecastAll(v2, currentNode.pos);
+                if(currentNode == startNode)
+                {
+                    if(collisions.Length > 1)
+                    {
+                        Debug.Log(collisions.Length);
+                        blocked = true;
+                    }
+                }
+                else if(collisions.Length > 0)
+                {
+                    Debug.Log(collisions.Length);
+                    blocked = true;
+                }
+                if (!blocked)
                 {
                     foreach (node n in closedNodes)
                     {
